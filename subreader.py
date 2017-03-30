@@ -22,10 +22,14 @@ class reader1:
         self.lbl1 = Label(self.root,text=self.currentline)
         self.lbl1.pack()
         
-        btn1 = Button(self.root,text='Win_TTS', command = lambda: setreader(1))
+  ### readerButtons Win_TTS and gTTS change setreader value. Win_TTS = windows text to speech. gTTS = Google Text to speech (gTTS uses MP3)
+        btn1  = Button(self.root,text='Win_TTS', command = lambda: setreader(1))
         btn1.pack()
         btn2 = Button(self.root,text='gTTS', command = lambda: setreader(0))
         btn2.pack()
+  ### readerButtons Win_TTS and gTTS change setreader value. Win_TTS = windows text to speech. gTTS = Google Text to speech (gTTS uses MP3) 
+  
+  ### SRT Button: Opens selecter window to choose .SRT file  
         btn = Button(self.root,text='Get .SRT', command = self.getsrt)
         btn.pack()
         
