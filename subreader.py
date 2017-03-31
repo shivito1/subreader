@@ -32,15 +32,20 @@ class reader1:
   ### SRT Button: Opens selecter window to choose .SRT file  
         btn = Button(self.root,text='Get .SRT', command = self.getsrt)
         btn.pack()
+  ### SRT Button: Opens selecter window to choose .SRT file       
         
+  ### Displays current SRT line.
         self.lbl0 = Label(self.root,text="",font='Times 15',fg="green",bg='black')
         self.lbl0.pack()
-        
+   ### Displays current SRT line.
+   
+   ### binds Arrow keys triger text to change and pyttsx to process current line.
         self.root.bind('<Right>', self.nextline)
         self.root.bind('<Down>', self.repeatline)
         self.root.bind('<Left>', self.backline)
         self.root.bind('<Control-Right>', self.nextline2)
         self.root.bind('<Control-Left>', self.backline2)
+   ### binds Arrow keys triger text to change and pyttsx to process current line.      
         
         self.root.mainloop()
         
