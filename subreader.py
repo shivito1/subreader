@@ -1,4 +1,4 @@
-import pyttsx
+﻿import pyttsx
 import pysrt, tkFileDialog
 from threading import Timer
 from Tkinter import *
@@ -50,11 +50,17 @@ class reader1:
         self.root.mainloop()
         
     def getsrt(self):
+      ### dialog window
         self.dirfile = tkFileDialog.askopenfilename()
+      ### dialog window
         print self.dirfile
-        
+      ### Opens SRT  
         self.opensrt = pysrt.open(self.dirfile)
+      ### Opens SRT
+      
+      ### Counts Lines
         self.lines = len(self.opensrt)
+      ### Counts Lines
         
     def nextline(self,event):
         def readnow():
