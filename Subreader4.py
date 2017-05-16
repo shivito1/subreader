@@ -1,7 +1,8 @@
 import pysrt,pyttsx,time
 from threading import Thread
-from Tkinter import Label,Tk
+from Tkinter import *
 from idlelib.idle_test.mock_tk import Event
+
 
 
 set1 = 0
@@ -11,7 +12,7 @@ interupt = 0
 
 settozero = 0
 
-subs = pysrt.open(r"C:\Users\admin\Desktop\Python-files\Deskinfo\eternal-loveSUBS\Eternal.Love.E14.srt")
+subs = pysrt.open(r"C:\Users\admin\Desktop\Python-files\Deskinfo\eternal-loveSUBS\Eternal.Love_E19.srt")
 compsrt = []
 
 def speechafter(subit,x):
@@ -57,10 +58,11 @@ def start_speak():
             start2 = get_ms(subs[(set2 - 1)].start)
             if set2 == 0:
                 newtime = get_ms(subs[0].start)
+                print newtime
                 x = 200
             else:
                 newtime = start - start2  
-                print float(newtime) / 1000 
+                print str(float(newtime) / 1000) + " - Place:" + str(item) + " --- " + (subs[set2].text).replace('\n',' ')
                 if subs[set2].text.endswith(' zz$'):
                     x=250
                     subs[set2].text = subs[set2].text.replace(' zz$', '') 
@@ -75,6 +77,8 @@ def start_speak():
                 pass
 
             time.sleep(float(newtime) / 1000)
+            lblsub.config(text=(subs[set2].text))
+            var.set(set2 +1)
             Thread(target=speechafter,args=(subs[set2].text, x)).start()
             set2 += 1
         
@@ -91,7 +95,7 @@ for sub in subs:
         pass
     else:
         time_need = int((char / 3.0) / (250.0/60.0) * 1000.0)
-        subs[set1].end = (subs[set1].start + time_need)
+        subs[set1].end = (subs[set1].start + time_need + 100)
         subs[set1].text = subs[set1].text + ' zz$'
         try:
             if subs[set1].end >= subs[(set1 +1)].start:
@@ -128,6 +132,11 @@ ed.close()
 #                    pass
 root = Tk()
 
+root.wm_minsize(root.winfo_screenwidth() - 25, 200)
+
+var = StringVar()
+
+
 def nextline(event):
     global inter
     inter = 'asdf'
@@ -135,6 +144,7 @@ def nextline(event):
     set2 = set2 + 1
     print set2
     print subs[set2].text
+    lblsub.config(text=(subs[set2].text))
 def pause(event):
     global settozero
     settozero = 5
@@ -149,11 +159,25 @@ def backline(event):
     global set2
     set2 = set2 - 1
     print subs[set2].text
+    lblsub.config(text=(subs[set2].text))
+    
+def enterline(line):
+    global inter
+    inter = 'asdf'
+    global set2
+    set2 = int(line)-1
+    print line
 
 root.attributes("-topmost", True)
-
-lbl = Label(text="start")
-lbl.pack()
+lblsub = Label(root,text='',font='comic 45',height=2,bg='gray')
+lblsub.pack(fill=X)
+lblcount = Label(root,textvariable=var)
+lblcount.pack(fill=X)
+ent = Entry(root)
+ent.pack(fill=X)
+ent.bind('<Return>', lambda e: enterline(ent.get()))
+lbl = Label(root,text="start")
+lbl.pack(fill=X)
 lbl.bind("<Button-1>",start_speak1)
 root.bind('<Right>', nextline)
 root.bind('<Down>', pause)
